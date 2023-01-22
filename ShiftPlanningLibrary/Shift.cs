@@ -1,16 +1,20 @@
 ﻿namespace ShiftPlanningLibrary {
     public class Shift : IShift {
-		private static uint _nextId;
+		private static int _nextId;
 
-        private uint _id;
+        private int _id;
 		private DateTime _start;
 		private DateTime _end;
+
+        public int Id {
+            get { return _id; }
+        }
 
 		public DateTime Start {
 			get { return _start; }
 			set {
                 _start = value;
-                if(value >= End) {
+                if(value >= End && End != default(DateTime)) {
                     throw new ArgumentException("Shift: End must be after Start");
                 }
             }
@@ -19,28 +23,34 @@
             get { return _end; }
             set {
                 _end = value;
-                if (value <= Start) {
+                if (value <= Start && Start != default(DateTime)) {
                     throw new ArgumentException("Shift: End must be after Start");
                 }
             }
         }
 
-        public Shift(DateTime start, DateTime end, uint id) {
-            _start = start;
+        public Shift(int id, DateTime start, DateTime end) {
+            Start = start;
             End = end;
             UpdateGlobalId(id);
             _id = id;
         }
-        public Shift(DateTime start, DateTime end) : this(start, end, _nextId++) { }
+        public Shift(DateTime start, DateTime end) : this(_nextId, start, end) { }
+        public Shift() {
+            _id = _nextId;
+            UpdateGlobalId(Id);
+        }
 
-        private void UpdateGlobalId(uint id) {
-            _nextId = id+1;
+        private void UpdateGlobalId(int id) {
+            if(id >= _nextId) {
+                _nextId = id + 1;
+            }
         }
 
         public override bool Equals(object? obj) {
             if(obj is Shift) {
                 Shift other = (Shift)obj;
-                return _id == other._id;
+                return _id == other._id && GetHashCode() == other.GetHashCode();
             }
             return false;
         }
