@@ -50,20 +50,18 @@ namespace ShiftPlanningLibraryTesting {
             DateTime start = DateTime.Now;
             DateTime end = start.AddHours(1);
 
-            List<int> idList = new List<int> { 1, 10, 100, 1000, 5, 50, 500, -1, 0 };
+            List<int> idList = new List<int> { -3, -2, -1, 0, 1, 2, 3 };
+            foreach(int id in idList) {
+                _ = new Shift(id, start, end);
+            }
 
-            IShift a = new Shift(idList[0], start, end);
-            IShift b = new Shift(idList[1], start, end);
-            IShift c = new Shift(idList[2], start, end);
-            IShift d = new Shift(idList[3], start, end);
-            IShift e = new Shift(idList[4], start, end);
-            IShift f = new Shift(idList[5], start, end);
-            IShift g = new Shift(idList[6], start, end);
-            IShift h = new Shift(idList[7], start, end);
-            IShift i = new Shift(idList[8], start, end);
-            IShift j = new Shift(start, end);
+            IShift autoId = new Shift(start, end);
 
-            Assert.IsFalse(idList.Contains(j.Id));
+            for(int i=0; i<100; i++) {
+                idList.Add(new Shift(start, end).Id);
+            }
+
+            Assert.IsFalse(idList.Contains(autoId.Id));
         }
     }
 }

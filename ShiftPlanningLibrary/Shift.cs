@@ -2,10 +2,19 @@
     public class Shift : IShift {
 		private static int _nextId;
 
+        private int _id;
 		private DateTime _start;
 		private DateTime _end;
 
-        public int Id { get; set; }
+        public int Id {
+            get {
+                return _id;
+            } 
+            set {
+                _id = value;
+                UpdateGlobalId(value);
+            }
+        }
 
 		public DateTime Start {
 			get { return _start; }
@@ -30,10 +39,11 @@
             Start = start;
             End = end;
             Id = id;
-            UpdateGlobalId(id);
         }
         public Shift(DateTime start, DateTime end) : this(_nextId, start, end) { }
-        public Shift() { }
+        public Shift() {
+            Id = _nextId;
+        }
 
         private void UpdateGlobalId(int id) {
             if(id >= _nextId) {
