@@ -41,7 +41,9 @@
             Id = id;
         }
         public Shift(DateTime start, DateTime end) : this(_nextId, start, end) { }
-        public Shift() { }
+        public Shift() {
+            Id = _nextId;
+        }
 
         private void UpdateGlobalId(int id) {
             if(id >= _nextId) {
