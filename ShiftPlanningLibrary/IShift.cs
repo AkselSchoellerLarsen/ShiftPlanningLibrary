@@ -8,5 +8,11 @@
                 return End - Start;
             }
         }
+        public string? UserEmail { get; set; }
+        public bool HasUser {
+            get {
+                return UserEmail != null;
+            }
+        }
     }
 }

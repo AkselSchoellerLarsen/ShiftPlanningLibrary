@@ -1,10 +1,13 @@
-﻿namespace ShiftPlanningLibrary {
+﻿using System.Collections.Generic;
+
+namespace ShiftPlanningLibrary {
     public class Shift : IShift {
 		private static int _nextId;
 
         private int _id;
 		private DateTime _start;
 		private DateTime _end;
+        private string? _userEmail;
 
         public int Id {
             get {
@@ -35,11 +38,27 @@
             }
         }
 
+        public string? UserEmail {
+            get {
+                return _userEmail;
+            }
+            set {
+                _userEmail = (value ?? "").ToLowerInvariant();
+            }
+        }
+
+        public Shift(int id, string userEmail, DateTime start, DateTime end) {
+            Start = start;
+            End = end;
+            UserEmail = userEmail;
+            Id = id;
+        }
         public Shift(int id, DateTime start, DateTime end) {
             Start = start;
             End = end;
             Id = id;
         }
+        public Shift(string userEmail, DateTime start, DateTime end) : this(_nextId, userEmail, start, end) { }
         public Shift(DateTime start, DateTime end) : this(_nextId, start, end) { }
         public Shift() { }
 
@@ -58,7 +77,9 @@
         }
 
         public override int GetHashCode() {
-            return (Id.GetHashCode() * Start.GetHashCode() * End.GetHashCode()) % int.MaxValue;
+            int i = 0;
+            if(UserEmail is not null) { i = UserEmail.GetHashCode(); }
+            return (i * Id.GetHashCode() * Start.GetHashCode() * End.GetHashCode()) % int.MaxValue;
         }
     }
 }

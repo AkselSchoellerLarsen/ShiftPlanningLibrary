@@ -63,5 +63,33 @@ namespace ShiftPlanningLibraryTesting {
 
             Assert.IsFalse(idList.Contains(autoId.Id));
         }
+
+        [TestMethod]
+        public void ShiftTestUserNoIdPositive() {
+            string userEmail = "Example@Email.com";
+            DateTime start = DateTime.Now;
+            DateTime end = start.AddHours(1);
+
+            IShift shift = new Shift(userEmail, start, end);
+
+            Assert.AreEqual(userEmail.ToLowerInvariant(), shift.UserEmail);
+            Assert.AreEqual(start, shift.Start);
+            Assert.AreEqual(end, shift.End);
+        }
+
+        [TestMethod]
+        public void ShiftTestUserAndIdPositive() {
+            int id = int.MinValue/2;
+            string userEmail = "Example@Email.com";
+            DateTime start = DateTime.Now;
+            DateTime end = start.AddHours(1);
+
+            IShift shift = new Shift(id, userEmail, start, end);
+
+            Assert.AreEqual(id, shift.Id);
+            Assert.AreEqual(userEmail.ToLowerInvariant(), shift.UserEmail);
+            Assert.AreEqual(start, shift.Start);
+            Assert.AreEqual(end, shift.End);
+        }
     }
 }
