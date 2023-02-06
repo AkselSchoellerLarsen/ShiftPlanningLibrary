@@ -71,7 +71,7 @@ namespace ShiftPlanningLibrary {
         public override bool Equals(object? obj) {
             if(obj is Shift) {
                 Shift other = (Shift)obj;
-                return Id == other.Id && GetHashCode() == other.GetHashCode();
+                return this.Id == other.Id && this.GetHashCode() == other.GetHashCode();
             }
             return false;
         }
@@ -79,7 +79,7 @@ namespace ShiftPlanningLibrary {
         public override int GetHashCode() {
             int i = 0;
             if(UserEmail is not null) { i = UserEmail.GetHashCode(); }
-            return (i * Id.GetHashCode() * Start.GetHashCode() * End.GetHashCode()) % int.MaxValue;
+            return (i + Id.GetHashCode() * Start.GetHashCode() * End.GetHashCode()) % int.MaxValue;
         }
     }
 }
