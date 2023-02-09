@@ -8,7 +8,7 @@ namespace ShiftPlanningLibrary {
     public class User : IUser {
         private string _email;
 
-        public string Email {
+        public virtual string Email {
             get {
                 return _email;
             }
@@ -16,8 +16,8 @@ namespace ShiftPlanningLibrary {
                 _email = value.ToLowerInvariant();
             }
         }
-        public string Password { get; set; }
-        public bool IsAdmin { get; set; }
+        public virtual string Password { get; set; }
+        public virtual bool IsAdmin { get; set; }
 
         public User(string email, string password, bool isAdmin) {
             Email = email;
@@ -38,7 +38,7 @@ namespace ShiftPlanningLibrary {
             if(other.Email == "") {
                 return false;
             }
-            return this.Email == other.Email && this.Password == other.Password;
+            return this.Email == other.Email && this.Password == other.Password && this.IsAdmin == other.IsAdmin;
         }
 
         public override int GetHashCode() {
