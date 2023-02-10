@@ -40,6 +40,9 @@ namespace ShiftPlanningLibrary {
 
         public string? UserEmail {
             get {
+                if(_userEmail == "") {
+                    return null;
+                }
                 return _userEmail;
             }
             set {

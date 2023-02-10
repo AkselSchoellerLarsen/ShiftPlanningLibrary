@@ -48,7 +48,7 @@ namespace ShiftPlanningLibraryTesting {
             string email = "Example@Email.com";
             string password = "not1234";
 
-            IUser user1 = new User(email, password, true);
+            IUser user1 = new User(email, password, false);
             IUser user2 = new User();
             user2.Email = email;
             user2.Password = password;
